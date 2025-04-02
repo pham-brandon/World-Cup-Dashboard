@@ -2,8 +2,8 @@
 
 import pandas as pd
 import plotly.express as px
-import dash
-from dash import dcc, html, Input, Output
+from dash import Dash, dcc, html, Input, Output
+import flask
 
 world_cup_data = pd.DataFrame({
     "year": [1930, 1934, 1938, 1950, 1954, 1958, 1962, 1966, 1970, 1974, 1978, 1982, 1986, 1990, 1994, 1998, 2002, 2006, 2010, 2014, 2018, 2022],
@@ -13,8 +13,8 @@ world_cup_data = pd.DataFrame({
 wins_count = world_cup_data['winners'].value_counts().reset_index()
 wins_count.columns = ['country', 'wins']
 
-app = dash.Dash(__name__)
-server = app.server
+server = flask.Flask(__name__)
+app = Dash(__name__, server=server)
 
 app.layout = html.Div([
     html.H1("FIFA Soccer World Cup winners and runner-ups", style={'textAlign': 'center'}),
